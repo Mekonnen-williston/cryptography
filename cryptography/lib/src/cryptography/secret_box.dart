@@ -16,6 +16,7 @@ import 'dart:typed_data';
 
 import 'package:cryptography/cryptography.dart';
 import 'package:cryptography/src/utils.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 /// Output of encrypting bytes with a [Cipher].
 ///
@@ -38,6 +39,10 @@ import 'package:cryptography/src/utils.dart';
 ///   macLength: 16,
 /// );
 /// ```
+
+part 'secret_box.g.dart';
+
+@JsonSerializable()
 class SecretBox {
   /// Encrypted data.
   final List<int> cipherText;
@@ -167,4 +172,9 @@ class SecretBox {
       );
     }
   }
+
+  factory SecretBox.fromJson(Map<String, dynamic> json) =>
+      _$SecretBoxFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SecretBoxToJson(this);
 }

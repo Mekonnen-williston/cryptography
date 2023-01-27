@@ -14,6 +14,7 @@
 
 import 'package:cryptography/cryptography.dart';
 import 'package:cryptography/helpers.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
 /// A Message Authentication Code (MAC). Usually obtained from some
@@ -22,7 +23,11 @@ import 'package:meta/meta.dart';
 /// Two instances of this class are equal if the bytes are equal.
 ///
 /// Note that [toString()] exposes the bytes.
+
+part 'mac.g.dart';
+
 @sealed
+@JsonSerializable()
 class Mac {
   /// Empty MAC.
   static const Mac empty = Mac(<int>[]);
@@ -31,6 +36,10 @@ class Mac {
   final List<int> bytes;
 
   const Mac(this.bytes);
+
+  factory Mac.fromJson(Map<String, dynamic> json) => _$MacFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MacToJson(this); 
 
   @override
   int get hashCode => constantTimeBytesEquality.hash(bytes);
